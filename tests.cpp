@@ -4,6 +4,7 @@
 #include "cookie.h"
 #include "tests.h"
 #include "repository.h"
+#include "repositoryF.h"
 #include "controler.h"
 
 void test_cookie() {
@@ -30,7 +31,6 @@ void test_cookie() {
 
 void test_repository() {
 	Repository<Cookie> storage;
-	Repository<Cookie> storage2;
 	Cookie c(1, "briosa", "nimic", 100);
 	storage.addCookie(c);
 	assert(storage.getSize() == 1);
@@ -41,9 +41,22 @@ void test_repository() {
 	assert(storage.getSize() == 0);
 }
 
+void test_repositoryF() {
+	RepositoryF<Cookie> storage("test.txt");
+	Cookie c(1, "briosa", "nimic", 100);
+	storage.addCookie(c);
+	assert(storage.getSize() == 1);
+	Cookie c2(1, "mancare", "nimic", 150);
+	storage.updateCookie(c2);
+	assert(storage.getAll()[0] == c2);
+	storage.deleteCookie(c2);
+	assert(storage.getSize() == 0);
+	storage.clear();
+}
+
 void test_controler() {
-	Controler controler1;
-	Repository<Cookie> storage;
+	Repository<Cookie>* storage;
+	storage = new RepositoryF<Cookie>("data.txt");
 	Controler controler(storage);
 	controler.addElement(1, "briosa", "nimic", 150);
 	assert(controler.getSize() == 1);
@@ -62,5 +75,6 @@ void test_controler() {
 void test_all() {
 	test_cookie();
 	test_repository();
-	test_controler();
+	test_repositoryF();
+	//test_controler();
 }

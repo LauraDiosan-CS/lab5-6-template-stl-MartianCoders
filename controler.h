@@ -1,17 +1,20 @@
 #pragma once
 #include "repository.h"
+
 class Controler {
 private:
-	Repository<Cookie> controler;
+	Repository<Cookie>* controler;
 public:
-	Controler();
-	Controler(const Repository<Cookie>&);
-	~Controler();
+	/* Constructor & Destructor */
+	Controler(); // Default
+	Controler(Repository<Cookie>*); // Copy storage from another
+	~Controler(); // Destructor
 
-	void addElement(int, const char*, const char*, double);
-	void deleteElement(int);
-	void updateElement(int, const char*, const char*, double);
+	/* CRUD */
+	void addElement(int, const char*, const char*, double); // Creates a Cookie object and add it in storage (In: ID, name, ingr, price)
+	void deleteElement(int); // Delete an element from storage using ID (In: ID)
+	void updateElement(int, const char*, const char*, double); // Creates a Cookie object and update in storage (In: ID, name, ingr, price)
 
-	int getSize();
-	vector<Cookie> getAll();
+	int getSize(); // Returns size of storage
+	vector<Cookie> getAll(); // Retunrs storage pointer
 };

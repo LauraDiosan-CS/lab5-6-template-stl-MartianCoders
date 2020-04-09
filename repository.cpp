@@ -16,7 +16,6 @@ Repository<Cookie>::~Repository() {}
 
 void Repository<Cookie>::addCookie(Cookie c) {
 	this->storage.push_back(c);
-
 }
 
 void Repository<Cookie>::updateCookie(Cookie c) {

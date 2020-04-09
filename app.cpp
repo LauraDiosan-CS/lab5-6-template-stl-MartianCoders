@@ -7,11 +7,10 @@
 #include "tests.h"
 
 int main() {
-	{test_all();
+	test_all();
 	RepositoryF<Cookie> storage("data.txt");
-	Controler controler(storage);
+	Controler controler(&storage);
 	UI ui(controler);
 	ui.runUI();
-	}
 	_CrtDumpMemoryLeaks();
 }

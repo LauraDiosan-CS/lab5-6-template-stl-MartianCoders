@@ -4,7 +4,7 @@ RepositoryF<Cookie>::RepositoryF():Repository<Cookie>() {
 	this->fileName = NULL;
 }
 
-RepositoryF<Cookie>::RepositoryF(const char* fileName) {
+RepositoryF<Cookie>::RepositoryF(const char* fileName):Repository<Cookie>() {
 	this->fileName = new char[strlen(fileName) + 1];
 	strcpy_s(this->fileName, strlen(fileName) + 1, fileName);
 	this->loadFile();
@@ -24,6 +24,7 @@ void RepositoryF<Cookie>::updateCookie(Cookie c) {
 
 void RepositoryF<Cookie>::deleteCookie(Cookie c) {
 	Repository<Cookie>::deleteCookie(c);
+	this->saveFile();
 }
 
 vector<Cookie> RepositoryF<Cookie>::getAll() {
