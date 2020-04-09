@@ -1,37 +1,32 @@
 #pragma once
-
 #include <iostream>
 #include <fstream>
-
 using namespace std;
-
 class Cookie {
 private:
 	int ID;
 	char* name;
-	char* ingredients;
+	char* ingr;
 	double price;
 public:
 	Cookie();
 	Cookie(int, const char*, const char*, double);
+	Cookie(const Cookie&);
 	~Cookie();
-
-	void setID(int);
-	void setName(const char*);
-	void setIng(const char*);
-	void setPrice(double);
 
 	int getID();
 	char* getName();
-	char* getIng();
+	char* getIngr();
 	double getPrice();
 
-	Cookie& operator=(const Cookie&);
+	void setID(int);
+	void setName(const char*);
+	void setIngr(const char*);
+	void setPrice(double);
 
-	bool operator<(const Cookie&);
-	bool operator>(const Cookie&);
-	bool operator==(const Cookie&);
-	bool operator!=(const Cookie&);
+	Cookie& operator=(const Cookie&);
+	bool operator==(const Cookie&) const;
+	bool operator!=(const Cookie&) const;
 
 	friend ostream& operator<<(ostream&, const Cookie&);
 };
