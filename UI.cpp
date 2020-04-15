@@ -12,6 +12,8 @@ UI::UI(Controler& service) {
 	this->controler = service;
 }
 
+UI::~UI() {}
+
 void UI::showBaseMenu() {
 	std::cout << '\n';
 	std::cout << "Type 'help' for commands info";
@@ -26,6 +28,8 @@ void UI::showHELP() {
 	std::cout << "update {ID to update} {newName} {newIngr} {newPrice}\n";
 	std::cout << "----\n";
 	std::cout << "delete {ID}\n";
+	std::cout << "----\n";
+	std::cout << "func1 - Average price per ingredient";
 }
 
 void UI::showAllUI() {
@@ -82,14 +86,12 @@ void UI::updateUI(string cmd) {
 	cmd.erase(0, pos + sep.length());
 	pos = cmd.find(sep);
 	token = cmd.substr(0, pos);
-	char* name = new char[token.length() + 1];
-	strcpy_s(name, token.length() + 1, token.c_str());
+	string name = token.c_str();
 
 	cmd.erase(0, pos + sep.length());
 	pos = cmd.find(sep);
 	token = cmd.substr(0, pos);
-	char* ingr = new char[token.length() + 1];
-	strcpy_s(ingr, token.length() + 1, token.c_str());
+	string ingr = token.c_str();
 
 	cmd.erase(0, pos + sep.length());
 	pos = cmd.find(sep);
@@ -97,10 +99,6 @@ void UI::updateUI(string cmd) {
 	double price = stoi(token);
 
 	this->controler.updateElement(ID, name, ingr, price);
-	delete[] ingr;
-	delete[] name;
-	name = NULL;
-	ingr = NULL;
 }
 
 void UI::deleteUI(string cmd) {
@@ -114,6 +112,12 @@ void UI::deleteUI(string cmd) {
 	int ID = stoi(token);
 
 	this->controler.deleteElement(ID);
+}
+
+void UI::averPriceIngr() {
+	std::map<string, std::pair<unsigned int, double>> ingredients = this->controler.averPriceIngr();
+	for (auto it = ingredients.begin(); it != ingredients.end(); it++)
+		std::cout << it->first << ": " << it->second.second / (int)it->second.first << endl;
 }
 
 void UI::runUI() {
@@ -134,5 +138,7 @@ void UI::runUI() {
 			this->updateUI(cmd);
 		if (cmd.find("exit") != string::npos)
 			run = false;
+		if (cmd.find("func1") != string::npos)
+			this->averPriceIngr();
 	}
 }
