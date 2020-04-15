@@ -1,10 +1,2 @@
-﻿  UI.cpp
-  app.cpp
-  controler.cpp
-  repository.cpp
-  repositoryF.cpp
-D:\C++\lab6-7 NEW\repositoryF.cpp(71,30): warning C4018: '<': signed/unsigned mismatch
-  tests.cpp
-  Generating Code...
-  LINK : D:\C++\lab6-7 NEW\Debug\lab6-7 NEW.exe not found or not built by the last incremental link; performing full link
+﻿  app.cpp
   lab6-7 NEW.vcxproj -> D:\C++\lab6-7 NEW\Debug\lab6-7 NEW.exe
