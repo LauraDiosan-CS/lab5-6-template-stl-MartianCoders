@@ -8,9 +8,12 @@
 
 int main() {
 	test_all();
-	RepositoryF<Cookie> storage("data.txt");
-	Controler controler(&storage);
-	UI ui(controler);
-	ui.runUI();
+	{
+		string file = "data.txt";
+		RepositoryF<Cookie> storage(file);
+		Controler controler(&storage);
+		UI ui(controler);
+		ui.runUI();
+	}
 	_CrtDumpMemoryLeaks();
 }
