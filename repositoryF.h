@@ -6,25 +6,72 @@
 template <class T>
 class RepositoryF: public Repository<T> {
 private:
-	char* fileName;
+	string fileName;
 public:
 	/* Constructor & Destructor */
-	RepositoryF(); // Defalut
-	RepositoryF(const char*); // By given fileName (In: fileName) 
-	RepositoryF(const RepositoryF<T>&); // Copy storage
-	~RepositoryF(); // Destructor
+	RepositoryF() {} // Defalut
+	RepositoryF(string file) { // By given fileName (In: fileName) 
+		this->fileName = file;
+		this->loadFile();
+	}
+
+	~RepositoryF() {} // Destructor
 
 	/* CRUD */
-	void addCookie(Cookie); // Add element Cookie (In: object Cookie)
-	void updateCookie(Cookie); // Update old Cookie with new Cookie (In: old object Cookie, new object Cookie)
-	void deleteCookie(Cookie); // Delete a Cookie element from storage (In: object COokie do delete)
+	void addCookie(T t) { // Add element Cookie (In: object Cookie)
+		Repository<T>::addCookie(t);
+	}
+
+	void updateCookie(T t) { // Update old Cookie with new Cookie (In: old object Cookie, new object Cookie)
+		Repository<T>::updateCookie(t);
+		this->saveFile();
+	}
+
+	void deleteCookie(T t) { // Delete a Cookie element from storage (In: object COokie do delete)
+		Repository<T>::deleteCookie(t);
+		this->saveFile();
+	}
 
 	/* Get's */
-	char* getFile(); // Returns fileName pointer (Out: fileName)
-	int getSize(); // Return size of storage (Out: size const)
-	std::vector<T> getAll(); // Returns pointer of storage (Out: storage)
+	int getSize() { // Return size of storage (Out: size const)
+		return Repository<T>::getSize();
+	}
+
+	std::vector<T> getAll() { // Returns pointer of storage (Out: storage)
+		return Repository<T>::getAll();
+	}
 
 	/* File operations */
-	void saveFile(); // Save data
-	void loadFile(); // Load data
+	void saveFile() { // Save data
+		if (this->fileName.size() > 0)
+		{
+			ofstream f(this->fileName);
+			for (int i = 0; i < Repository<T>::getSize(); i++)
+			{
+				f << Repository<T>::getAll()[i];
+			}
+			f.close();
+		}
+	}
+
+	void loadFile() { // Load data
+		if (this->fileName.size() > 0)
+		{
+			Repository<T>::clear();
+			ifstream f(this->fileName);
+			int ID;
+			string name;
+			string ingr;
+			double price;
+			while (!f.eof())
+			{
+				f >> ID >> name >> ingr >> price;
+				if (name.size() > 0)
+				{
+					Repository<T>::addCookie(Cookie(ID, name, ingr, price));
+				}
+			}
+			f.close();
+		}
+	}
 };
